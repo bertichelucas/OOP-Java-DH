@@ -1,6 +1,6 @@
 package bancosistema;
 
-public class CuentaCorriente extends Cuenta {
+public class CuentaCorriente extends Cuenta implements  GravarImpuesto, Comparable {
 
     private double giroDescubierto;
 
@@ -20,5 +20,20 @@ public class CuentaCorriente extends Cuenta {
         } else{
             System.out.println("No es posible extraer esa cantidad");
         }
+    }
+
+    @Override
+    public double gravar(double porcentaje){
+        double montoADescontar = this.getSaldo() * porcentaje;
+        this.setSaldo(this.getSaldo() - montoADescontar);
+
+        return montoADescontar;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        CuentaCorriente cc = (CuentaCorriente) o;
+
+        return (int)(this.getSaldo() - cc.getSaldo());
     }
 }
